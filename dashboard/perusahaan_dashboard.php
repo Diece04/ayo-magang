@@ -363,19 +363,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_ks'])) {
                         <h5 class="card-title mb-1">' . htmlspecialchars($row['mahasiswa_nama']) . '</h5>
                         <p class="card-text mb-2">Status: ' . htmlspecialchars(ucfirst($row['status'])) . '</p>';
                   // show accept/reject only if status is permohonan (company decides only after admin sets 'permohonan')
-                  if ($row['status'] === 'pengajuan') {
+                  if ($row['status'] === 'pengajuan' && $row['status_surat'] === 'sudah dibuat') {
                     echo '<form method="post" class="d-flex gap-2">
                             <input type="hidden" name="pengajuan_id" value="' . intval($row['id']) . '">
                             <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Terima</button>
-                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Tolak</button>';
-                    if ($row['surat_id'] !== null) {
-                      echo '
-                              <a href="../admin/view_surat_pengantar.php?id=' . $row['surat_id'] . '&mode=view"
+                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Tolak</button>
+                            <a href="../admin/view_surat_pengantar.php?id=' . $row['surat_id'] . '&mode=view"
                                 class="btn btn-outline-primary flex-fill me-1">
                                 <i class="bx bx-eye me-1"></i>Lihat Surat
-                              </a>';
-                    }
-                    echo '</form>';
+                              </a></form>';
                   }
                   echo '</div></div>';
                 }
