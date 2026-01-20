@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2026 at 06:15 AM
+-- Generation Time: Jan 20, 2026 at 03:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -95,7 +95,10 @@ INSERT INTO `mahasiswa` (`id`, `user_id`, `nama`, `jurusan_id`, `nim`, `alamat`,
 (6, 14, 'Randi', 2, '2401092088', 'rumah randi', '', 'pending'),
 (7, 18, 'Intan Apriliani Putri', 2, '2401091031', 'Cemara 1', '', 'approved'),
 (8, 19, 'Revan Alif Safero', 2, '2401092022', 'Bukit Tinggi', '', 'pending'),
-(9, 20, 'Dinda Fauziah Citra', 2, '2401092023', 'Agam', '2401092022', 'pending');
+(9, 20, 'Dinda Fauziah Citra', 2, '2401092023', 'Agam', '2401092022', 'pending'),
+(10, 21, 'dummy', 2, '1231231234', 'dummy', '081212341234', 'approved'),
+(11, 22, 'dummy2', 2, '124135235', 'dummy2', '13204523452', 'approved'),
+(12, 23, 'dummy3', 2, '125323463', 'dummy3', '1421352135', 'approved');
 
 -- --------------------------------------------------------
 
@@ -119,13 +122,10 @@ INSERT INTO `pengajuan_magang` (`id`, `mahasiswa_id`, `perusahaan_id`, `status`,
 (2, 3, 2, 'ditolak', '2025-12-29 19:50:27'),
 (3, 2, 3, 'diterima', '2025-12-30 10:10:08'),
 (4, 4, 3, 'ditolak', '2025-12-30 10:35:33'),
-(6, 3, 3, 'diterima', '2026-01-02 10:44:19'),
 (7, 5, 2, 'ditolak', '2026-01-02 10:46:09'),
 (8, 6, 2, 'ditolak', '2026-01-04 11:09:51'),
-(9, 6, 3, 'diterima', '2026-01-04 11:10:22'),
-(10, 3, 4, 'pengajuan', '2026-01-04 11:50:37'),
-(11, 2, 2, 'pengajuan', '2026-01-17 03:14:43'),
-(12, 7, 3, 'pengajuan', '2026-01-19 04:17:32');
+(18, 3, 4, 'diterima', '2026-01-19 14:36:49'),
+(21, 10, 3, 'diterima', '2026-01-20 01:45:28');
 
 -- --------------------------------------------------------
 
@@ -168,11 +168,39 @@ CREATE TABLE `surat` (
   `perusahaan_id` int(25) NOT NULL,
   `no_surat` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `nim` int(12) NOT NULL,
+  `nim` varchar(20) NOT NULL,
   `prodi` varchar(255) NOT NULL,
-  `no_hp` int(16) NOT NULL,
-  `waktu_magang` datetime NOT NULL,
-  `dospem` varchar(255) NOT NULL,
+  `no_hp` varchar(20) NOT NULL,
+  `waktu_magang` varchar(50) NOT NULL,
+  `perusahaan` varchar(255) NOT NULL,
+  `tanggal_surat` date NOT NULL,
+  `status` enum('sudah dibuat','belum dibuat') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `surat`
+--
+
+INSERT INTO `surat` (`id`, `mahasiswa_id`, `perusahaan_id`, `no_surat`, `nama`, `nim`, `prodi`, `no_hp`, `waktu_magang`, `perusahaan`, `tanggal_surat`, `status`) VALUES
+(1, 12, 3, '232 /DST/PL9/PP.02.10/2026', 'dummy3', '125323463', 'Teknologi Informasi', '1421352135', 'Maret 2026 s/d Mei 2026', 'PT. Micew Sejahtera', '2026-01-19', 'sudah dibuat'),
+(2, 10, 3, '232 /DST/PL9/PP.02.10/2026', 'dummy', '1231231234', 'Teknologi Informasi', '38457683465', 'Maret 2026 s/d Mei 2026', 'PT. Micew Sejahtera', '2026-01-20', 'sudah dibuat');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `surat_pelaksanaan`
+--
+
+CREATE TABLE `surat_pelaksanaan` (
+  `id` int(25) NOT NULL,
+  `mahasiswa_id` int(25) NOT NULL,
+  `perusahaan_id` int(25) NOT NULL,
+  `no_surat` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `nim` varchar(20) NOT NULL,
+  `prodi` varchar(255) NOT NULL,
+  `no_hp` varchar(20) NOT NULL,
+  `waktu_magang` varchar(50) NOT NULL,
   `perusahaan` varchar(255) NOT NULL,
   `status` enum('sudah dibuat','belum dibuat') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -212,7 +240,10 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `email`, `created_at`
 (17, 'jurusan2', '$2y$10$VyC9O/1YGF2wJvLxyG9VC.FQUnW1pwaGltOg.Ji.CXneb2M1xW9Bi', 4, 'jurusan@gmail.com', '2026-01-02 10:41:50'),
 (18, 'intan', '$2y$10$Kew84J1PvApc2Kp4u.OFz..ZT46WM6XVUzOHczCMcQM.GWD5uklly', 2, 'intan@gmail.com', '2026-01-17 03:07:52'),
 (19, 'revan', '$2y$10$PCMpbXdDKxl25ccFemwzB.JQh1JU8UoNNWmQulKsZyjGChQr/UVJe', 2, 'revanalifsafero@gmail.com', '2026-01-19 05:07:52'),
-(20, 'citra', '$2y$10$37SNax9UdTZS30vNBJC9FenDkh/3C30fAeOGD6qOCcLvr.by/9A7G', 2, 'citra@gmail.com', '2026-01-19 05:12:12');
+(20, 'citra', '$2y$10$37SNax9UdTZS30vNBJC9FenDkh/3C30fAeOGD6qOCcLvr.by/9A7G', 2, 'citra@gmail.com', '2026-01-19 05:12:12'),
+(21, 'dummy', '$2y$10$W2tCmsu3P8r.BZ3qTOhGEer9DKxisEBVdbv7MQdt8vL61bYrFa9W.', 2, 'dummy@gmail.com', '2026-01-19 12:14:17'),
+(22, 'dummy2', '$2y$10$1xSF7QWWtGkBwUg9/YsqyuMML9DhgBHtmzZ68XWqc2tMrMs264XVu', 2, 'dummy2@gmail.com', '2026-01-19 16:53:38'),
+(23, 'dummy3', '$2y$10$jR6vQiH8MBl.bMGmjAGg.ON4bbiRBl1dd4XXyLBHntFtn6NpVxFs6', 2, 'dummy3@gmail.com', '2026-01-19 16:54:50');
 
 --
 -- Indexes for dumped tables
@@ -261,6 +292,12 @@ ALTER TABLE `perusahaan`
 -- Indexes for table `surat`
 --
 ALTER TABLE `surat`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `surat_pelaksanaan`
+--
+ALTER TABLE `surat_pelaksanaan`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD UNIQUE KEY `mahasiswa_id` (`mahasiswa_id`),
   ADD UNIQUE KEY `perusahaan_id` (`perusahaan_id`);
@@ -292,13 +329,13 @@ ALTER TABLE `kerja_sama`
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `pengajuan_magang`
 --
 ALTER TABLE `pengajuan_magang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `perusahaan`
@@ -310,7 +347,7 @@ ALTER TABLE `perusahaan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
@@ -348,6 +385,20 @@ ALTER TABLE `pengajuan_magang`
 --
 ALTER TABLE `perusahaan`
   ADD CONSTRAINT `perusahaan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `surat`
+--
+ALTER TABLE `surat`
+  ADD CONSTRAINT `surat_ibfk_1` FOREIGN KEY (`mahasiswa_id`) REFERENCES `mahasiswa` (`id`),
+  ADD CONSTRAINT `surat_ibfk_2` FOREIGN KEY (`perusahaan_id`) REFERENCES `perusahaan` (`id`);
+
+--
+-- Constraints for table `surat_pelaksanaan`
+--
+ALTER TABLE `surat_pelaksanaan`
+  ADD CONSTRAINT `surat_pelaksanaan_ibfk_1` FOREIGN KEY (`mahasiswa_id`) REFERENCES `mahasiswa` (`id`),
+  ADD CONSTRAINT `surat_pelaksanaan_ibfk_2` FOREIGN KEY (`perusahaan_id`) REFERENCES `perusahaan` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
