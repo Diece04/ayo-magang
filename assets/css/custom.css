@@ -1,0 +1,13 @@
+/* Custom styles for dashboard cards - ensure consistent spacing and colors */
+.card {
+  /* No drastic changes, just minor tweaks for responsiveness */
+  margin-bottom: 1rem;
+}
+.card-title {
+  /* Keep existing font weights */
+  font-weight: 600;
+}
+/* Add subtle hover effect for cards without changing core theme */
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
